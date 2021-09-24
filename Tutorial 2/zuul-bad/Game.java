@@ -155,8 +155,9 @@ public class Game
             Room temp = currentRoom;
             currentRoom = previousRoom;
             previousRoom = temp;
+            printDescription();
         }
-        if (command.getCommandWord().equals("go")) {
+        else if (command.getCommandWord().equals("go")) {
             if(!command.hasSecondWord()) {
                 // if there is no second word, we don't know where to go...
                 System.out.println("Go where?");
