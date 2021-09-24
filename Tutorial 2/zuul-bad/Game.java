@@ -51,9 +51,9 @@ public class Game
         outside.setExit(Direction.WEST, pub);
 
         theater.setExit(Direction.WEST, outside);
-        theater.setExit(Direction.DOWN, cellar);
 
         pub.setExit(Direction.EAST, outside);
+        pub.setExit(Direction.DOWN, cellar);
 
         lab.setExit(Direction.NORTH, outside);
         lab.setExit(Direction.EAST, office);
@@ -63,7 +63,7 @@ public class Game
         cellar.setExit(Direction.UP, theater);
 
         currentRoom = outside;  // start game outside
-        lastRoom = outside;
+        previousRoom = outside;
 
 
         currentRoom = outside;  // start game outside

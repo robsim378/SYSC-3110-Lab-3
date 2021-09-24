@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -15,26 +18,12 @@
 public class Room 
 {
     public String description;
-    private Room northExit;
-    private Room southExit;
-    private Room eastExit;
-    private Room westExit;
+
+    private Map<Direction, Room> exits;
 
     public Room getExit(String direction) {
-
-        if (direction.equals("north")) {
-            return northExit;
-        }
-        if (direction.equals("east")) {
-            return eastExit;
-        }
-        if (direction.equals("south")) {
-            return southExit;
-        }
-        if (direction.equals("west")) {
-            return westExit;
-        }
-        return null;
+        Direction lowercaseDirection = Direction.getEnum(direction);
+        return exits.get(lowercaseDirection);
     }
 
     /**
@@ -46,30 +35,11 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
+        exits = new HashMap<>();
     }
 
-    /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
-     */
-    public void setExits(Room north, Room east, Room south, Room west) 
-    {
-        if(north != null) {
-            northExit = north;
-        }
-        if(east != null) {
-            eastExit = east;
-        }
-        if(south != null) {
-            southExit = south;
-        }
-        if(west != null) {
-            westExit = west;
-        }
+    public void setExit(Direction direction, Room room) {
+        exits.put(direction, room);
     }
 
     /**
@@ -83,17 +53,8 @@ public class Room
     public void printLongDescription() {
         System.out.println("You are " + this.getDescription());
         System.out.print("Exits: ");
-        if(this.getExit("north") != null) {
-            System.out.print("north ");
-        }
-        if(this.getExit("east") != null) {
-            System.out.print("east ");
-        }
-        if(this.getExit("south") != null) {
-            System.out.print("south ");
-        }
-        if(this.getExit("west") != null) {
-            System.out.print("west ");
+        for (Direction direction: exits.keySet()) {
+            System.out.print(direction.getName() + " ");
         }
         System.out.println();
     }
