@@ -65,8 +65,6 @@ public class Game
         currentRoom = outside;  // start game outside
         previousRoom = outside;
 
-
-        currentRoom = outside;  // start game outside
     }
 
     /**
@@ -118,11 +116,14 @@ public class Game
         if (commandWord.equals("help")) {
             printHelp();
         }
-        else if (commandWord.equals("go") || commandWord.equals("back")) {
+        else if (commandWord.equals("go")) {
             goRoom(command);
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
+        }
+        else if (commandWord.equals("back")) {
+            back(command);
         }
 
 
@@ -149,35 +150,44 @@ public class Game
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
      */
+    private void back(Command command) {
+        Room temp = currentRoom;
+        currentRoom = previousRoom;
+        previousRoom = temp;
+        printDescription();
+    }
+
     private void goRoom(Command command) 
     {
-        if (command.getCommandWord().equals("back")) {
-            Room temp = currentRoom;
-            currentRoom = previousRoom;
-            previousRoom = temp;
-            printDescription();
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Go where?");
+            return;
         }
-        else if (command.getCommandWord().equals("go")) {
-            if(!command.hasSecondWord()) {
-                // if there is no second word, we don't know where to go...
-                System.out.println("Go where?");
-                return;
+
+        Boolean directionExists = false;
+
+        String direction = command.getSecondWord();
+
+        for (Direction d : Direction.values()) {
+            if (d.getName().equals(direction)) {
+                // Try to leave current room.
+                directionExists = true;
+                Room nextRoom = null;
+
+                nextRoom = currentRoom.getExit(direction);
+
+                if (nextRoom == null) {
+                    System.out.println("There is no door!");
+                }
+                else {
+                    currentRoom = nextRoom;
+                    printDescription();
+                }
             }
-
-            String direction = command.getSecondWord();
-
-            // Try to leave current room.
-            Room nextRoom = null;
-
-            nextRoom = currentRoom.getExit(direction);
-
-            if (nextRoom == null) {
-                System.out.println("There is no door!");
-            }
-            else {
-                currentRoom = nextRoom;
-                printDescription();
-            }
+        }
+        if (!directionExists) {
+            System.out.println("That is not a direction!");
         }
     }
 

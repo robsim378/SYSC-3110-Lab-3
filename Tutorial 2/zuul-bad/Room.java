@@ -21,9 +21,9 @@ public class Room
 
     private Map<Direction, Room> exits;
 
-    public Room getExit(String direction) {
-        Direction lowercaseDirection = Direction.getEnum(direction);
-        return exits.get(lowercaseDirection);
+    public Room getExit(String stringDirection) {
+        Direction enumDirection = Direction.getEnum(stringDirection);
+        return exits.get(enumDirection);
     }
 
     /**
