@@ -30,4 +30,8 @@ public class AddressBook {
         addressBook.addBuddy(buddy);
         addressBook.removeBuddy(buddy);
     }
+
+    public void Branch_Test() {
+        System.out.println("Branch time");
+    }
 }
