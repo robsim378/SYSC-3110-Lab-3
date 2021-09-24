@@ -30,6 +30,10 @@ public class AddressBook {
         addressBook.addBuddy(buddy);
         addressBook.removeBuddy(buddy);
     }
+    
+    public void test() {
+        System.out.print("Test");
+    }
 
 
 }
